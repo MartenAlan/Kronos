@@ -1,0 +1,34 @@
+\hypertarget{chart_8h_source}{}\doxysection{chart.\+h}
+\mbox{\hyperlink{chart_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ CHART\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ CHART\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QtCharts/QChartGlobal>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QtCharts/QChartView>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <QtCharts/QPieSeries>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <QtCharts/QPieSlice>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QtCharts/QLineSeries>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QtCharts/QSplineSeries>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QtCharts/QCategoryAxis>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QDateTimeAxis>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <QDesktopServices>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{db_8h}{db.h}}"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_chart}{Chart}}}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ QChartView\ *\ \mbox{\hyperlink{class_chart_a022b288b62180efa59528914bc8908c0}{createPieChart}}(\textcolor{keywordtype}{int}\ i,\ QDate\ start,\ QDate\ end);}
+\DoxyCodeLine{00021\ \ \ \ \ QChartView\ *\ \mbox{\hyperlink{class_chart_ab8d923faf9600b8695f48920bc8f1c2a}{createLineChart}}(QDate\ start,\ QDate\ end);}
+\DoxyCodeLine{00022\ \ \ \ \ QChartView\ *\ \mbox{\hyperlink{class_chart_aae41fb9f5eeec852f6aebae99d84f9ca}{Chart\_HO\_non\_static}}(QDate\ start,\ QDate\ end);}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_d_b}{DB}}\ \mbox{\hyperlink{class_chart_afb9a47824673bcf1ba4953994cf2afe0}{db}};}
+\DoxyCodeLine{00024\ \ \ \ \ QVector<int>\ \mbox{\hyperlink{class_chart_a65897f650556b2a373f3789da4885902}{TabelleMinuten}}(QDate\ datum);}
+\DoxyCodeLine{00025\ \ \ \ \ QVector<QString>\ \mbox{\hyperlink{class_chart_ab344010d9928e2a7ac682f0aa36a13f6}{TabelleTyp}}(QDate\ datum);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CHART\_H}}
+
+\end{DoxyCode}

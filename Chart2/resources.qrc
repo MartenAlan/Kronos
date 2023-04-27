@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+  	<file>img/svlfg_logo.png</file>
+        <file>db/zeitdb.db</file>
+    </qresource>
+</RCC>

@@ -19,7 +19,8 @@ public:
     void getMonthInfos();
     void setIndexesTo33();
     void setIndexesTo36();
-    QString getType(QString fz);
+    int convertType(QString);
+    QString getType(QString);
 
     int diffnt; int ntges; int saldo; int soll;
     int urlalt;int urlrst;int urlakt;int urlges;

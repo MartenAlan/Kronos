@@ -10,6 +10,7 @@
 #include <QList>
 #include <journal.h>
 #include <day.h>
+#include <QVector2D>
 
 class DB
 {
@@ -28,7 +29,7 @@ public:
     int insertNewDayResults(Day);
     void fillTypesTable();
     void fillErrorTable();
-    static QMap<QString,QString> getTypeMap();
+    static QVector<QString> getTypeMap();
     static QMap<QString, QString> getErrorMap();
 };
 

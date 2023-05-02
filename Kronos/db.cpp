@@ -133,7 +133,7 @@ void DB::createTables(){
     queryString = "CREATE TABLE `types` ("
             "`ID`       INTEGER,"
             "`initials`	TEXT    NOT NULL UNIQUE,"
-            "`name`     INTEGER NOT NULL UNIQUE,"
+            "`name`     TEXT ,"
             "PRIMARY KEY(`ID` AUTOINCREMENT)"
         ");";
     execQueryWithoutResultSet(queryString);
@@ -185,14 +185,13 @@ void DB::createTables(){
 
 void DB::fillTypesTable(){
     QSqlQuery q;
-    QMap<QString, QString> map = getTypeMap();
-    QMapIterator<QString, QString> i(map);
-    while (i.hasNext()) {
-        i.next();
+     QVector <QString> types = getTypeMap();
+     qDebug() << "test";
+    for(int i = 0;i<types.length();i++){
         q.prepare("INSERT INTO types (initials, name) "
                   "VALUES (:initials, :name)");
-        q.bindValue(":initials", i.key());
-        q.bindValue(":name", i.value());
+        q.bindValue(":initials", types[i]);
+        q.bindValue(":name", "Test");
         qDebug() << q.exec();
         if (!q.isActive()) {
             qWarning() << "ERROR: Create Table " << q.lastError();
@@ -217,10 +216,11 @@ void DB::fillErrorTable(){
     }
 }
 
+
 void DB::insertNewDay(Day d){
     QSqlQuery q;
     for (const TimeInterval &x: d.times){
-        qDebug() << x.minutes;
+        qDebug() << x.typeID;
     q.prepare("INSERT INTO days (minuten, minutenRaw,"
               " datum, typenID, errorID, journalID, dayResultID) "
                   "VALUES (:minuten, :minutenRaw,"
@@ -281,13 +281,15 @@ int DB::insertNewDayResults(Day d){
     return q.lastInsertId().toInt();
 }
 
-QMap<QString,QString> DB::getTypeMap(){
-    QMap<QString, QString> map;
-    map["FA"] = "Flexibles Arbeiten";
-    map["O"] = "Büro";
-    map["URL"] = "Urlaub";
-    map["KRK"] = "Krank";
-    map["ABS"] = "Berufsschule";
+QVector<QString> DB::getTypeMap(){
+    QVector<QString> map(7);
+    map[0] = "FA";
+    map[1] = "O";
+    map[2] = "URL";
+    map[3] = "KRK";
+    map[4]= "GLT";
+    map[5] = "ABS";
+    map[6] = "WE";
 
     return map;
 }

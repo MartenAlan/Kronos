@@ -31,6 +31,18 @@ void Journal::setIndexesTo36(){
     indexes["NtGesMon"] = 25;
 }
 
+int Journal::convertType(QString t){
+    QMap <QString, int> types; 
+    types["FA"]=1;
+    types["O"]=2;
+    types["URL"]=3;
+    types["KRK"]=4;
+    types["GLT"]=5;
+    types["WE"]=6;
+    types["ABS"]=7;
+    return types[t];
+}
+
 
 // NOTE Herausfiltern der Metainformationen ( Zeile 0-6 )
 void Journal::getMetaInfos(){
@@ -58,6 +70,7 @@ void Journal::getDayInfos(){
             // Handelt es sich um einen Wochenende-Tag?
             if(getCell(i,3) == "101"){
                 days.last().times.append(TimeInterval("WE oder KA"));
+                days.last().times.last().typeID = convertType("WE");
                 continue;
             }
         }
@@ -68,6 +81,7 @@ void Journal::getDayInfos(){
                 QTime end = QTime::fromString(getCell(i, indexes["time2"]));
                 days.last().times.append(TimeInterval(begin, end));
                 days.last().times.last().type = "O";
+                days.last().times.last().typeID = convertType("O");
 
 
             }
@@ -78,6 +92,7 @@ void Journal::getDayInfos(){
                  if(getCell(i,indexes["fz"])=="FA"){
                      days.last().times.append(TimeInterval(QTime::fromString(getCell(i, indexes["time2"]))));
                      days.last().times.last().type = "FA";
+                     days.last().times.last().typeID = convertType("FA");
                  }
                  else{
                      days.last().times.last().end = QTime::fromString(getCell(i, indexes["time2"]));
@@ -89,6 +104,7 @@ void Journal::getDayInfos(){
             // nach Abkürzungen kontrollieren
             if(getType(getCell(i,indexes["fz"])) != ""){
                 days.last().times.append(getType(getCell(i,indexes["fz"])));
+                days.last().times.last().typeID = convertType(getType(getCell(i,indexes["fz"])));
             }
 
             // Tagesdaten hinzufügen,

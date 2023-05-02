@@ -1,4 +1,6 @@
 Marten:
 Projekt umbenannt, Buttons in Nav noch nicht funktionstüchtig.
 Arbeite ab jetzt auf dem develop branch
-Kommentar für commit
+
+Journale lassen sich jetzt importieren. Daten sind noch nicht komplett richtig. Man kann sich aber schon Statistiken mit ihnen ausgeben lassen
+pushButtonDate und pushButtonLineChart geben Fehler aus, wenn ich meine Journale eingefügt habe. Pie Chart funktioniert mit Home Office und Büro

@@ -8,6 +8,7 @@ Day::Day()
 
 TimeInterval::TimeInterval(QString type){
     this->type = type;
+    this->typeID=0;
     minutesRaw = 0;
     minutes = 0;
 }
@@ -17,12 +18,14 @@ TimeInterval::TimeInterval(QTime begin, QTime end){
     this->end = end;
     this->minutesRaw = begin.secsTo(end) / 60;
     this->minutes = begin.secsTo(end) / 60;
+    this->typeID=0;
 }
 
 TimeInterval::TimeInterval(QTime begin){
     this->begin = begin;
     minutesRaw=0;
     minutes=0;
+    this->typeID=0;
 }
 
 void TimeInterval::getMinutesRaw(){

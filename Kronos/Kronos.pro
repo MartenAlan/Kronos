@@ -10,20 +10,24 @@ CONFIG += c++17
 
 SOURCES += \
     chart.cpp \
+    day.cpp \
     db.cpp \
+    journal.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     chart.h \
+    day.h \
     db.h \
+    journal.h \
     mainwindow.h
 
 FORMS += \
     mainwindow.ui
 
 TRANSLATIONS += \
-    Chart2_de_DE.ts
+    Kronos_de_DE.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 

@@ -90,6 +90,7 @@ QChartView *Chart::createLineChart(QDate start, QDate end) {
   chart->addSeries(series);
 
   l = db.getList(2, start, end);
+  qDebug() << l;
 
   QLineSeries *series2 = new QLineSeries(chart);
   series2->setName("Büro");
@@ -166,7 +167,7 @@ QChartView *Chart::createLineChart(QDate start, QDate end) {
 
   QChartView *chartView = new QChartView(chart);
   chartView->setRenderHint(QPainter::Antialiasing);
-
+qDebug() << "test";
   return chartView;
 }
 /**

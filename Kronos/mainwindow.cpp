@@ -130,3 +130,111 @@ void MainWindow::on_pushButtonDate_clicked() {
       c.createLineChart(ui->dateEditStart->date(), ui->dateEditEnd->date()));
   MainWindow::tabelle(ui->dateEditStart->date(), ui->dateEditEnd->date());
 }
+
+void MainWindow::openFile(){
+    qDebug() << "Import File";
+
+    // NOTE Open Text File
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Öffnen eines Journals"), "C:/Users/marte/documents", tr("Journal (*.csv)"));
+    processJournal(fileName);
+
+}
+
+void MainWindow::processJournal(QString filename){
+    Journal * newJournal = parseFile(filename);
+    // insert newjournal into database - Funktion
+    // Journal insert
+    int journalID = db.insertNewJournal(newJournal);
+    if(journalID != -1){
+    int dayResultsID = 0;
+    // Schleife Tage
+    for(auto &x : newJournal->days){
+        // DayResults Insert
+        dayResultsID = db.insertNewDayResults(x);
+        x.dayResultsID = dayResultsID;
+        x.journalID = journalID;
+
+        // Day Insert
+        db.insertNewDay(x);
+        }
+    }
+    else{
+        qDebug() << "Journal wurde bereits importiert.";
+    }
+}
+
+Journal * MainWindow::parseFile(QString fileName){
+
+    // Einlesen der Datei ins Journal als String Array
+    if (fileName.isEmpty())
+        return nullptr;
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return nullptr;
+    }
+    QTextStream in(&file);
+    QString line;
+
+    // Objekt erstellen
+    Journal * newJournal = new Journal();
+
+    int firstRow = 0; int columns = 0;
+    QStringList tempStringList;
+    while(!in.atEnd()){
+        line += in.readLine(); // +=, um newlines richtig zusammenzufügen
+        tempStringList = line.split(";");
+
+    // erste Zeile, Spaltenlänge kontrollieren
+    if (firstRow == 0)
+    {
+        columns = tempStringList.length();
+        firstRow += 1;
+    }
+    // danach Schleife bis Schleifenlänge erreicht ist, um newlines zu umgehen
+        if(tempStringList.length() >= columns){
+            newJournal->journaltext.append(tempStringList);
+             tempStringList.clear();
+             line = "";
+    }
+}
+    // Objekt anhand Spaltenlänge anpassen
+    if(columns == 33){
+        newJournal->setIndexesTo33();
+    }
+    else if (columns == 36){
+        newJournal->setIndexesTo36();
+    }
+    // MetaInfos mit GetCell herausholen
+    newJournal->getMetaInfos();
+
+    // Tagesdaten mit GetCell herausholen
+    newJournal->getDayInfos();
+
+    // Monatsdaten mit GetCell herausholen
+    // TODO noch nicht die Urlaubswerte
+    newJournal->getMonthInfos();
+
+
+    // Ausgabe zur Überprüfung
+    qDebug() << "";
+    qDebug() << newJournal->datum.toString("MM yyyy")+ " | " + newJournal->druckdatum.toString("dd.MM.yyyy");
+    qDebug() << newJournal->ntges << " | " <<  newJournal->soll << " | " << newJournal->saldo << " | " << newJournal->diffnt;
+    qDebug() << "";
+    for(const auto &x : newJournal->days)
+    {
+        qDebug() << x.date << "|" << x.saldo << "|" << x.soll << "|" << x.ntges;
+        for(const auto &y : x.times){
+            qDebug() << y.minutesRaw << " " << y.minutes << " " <<  y.type;
+        }
+    }
+
+    // TODO rawMinutes --> Minutes, Tage durchgehen, Pausen hinzufügen
+    // Anfang ist gemacht, 9 Atunden müssen noch berücksichtigt werden
+
+    for(auto &x : newJournal->days){
+        x.calculateMinutes();
+    }
+
+    return newJournal;
+}
